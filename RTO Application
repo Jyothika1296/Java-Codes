@@ -1,0 +1,84 @@
+package com.gqt.entities;
+import java.util.Scanner;
+class UnderAgeException extends Exception
+{
+	public String getMessage()
+	{
+		return"You are too young to apply.Apply after when you have 18 years!!";
+	}
+}
+class AboveAgeException extends Exception
+{
+	public String getMessage()
+	{
+		return"You are too old to apply.Not eligible to apply DL!!";
+	}
+}
+class Application 
+{
+  private int age;
+  public void acceptInput()
+  {
+	  Scanner scan = new Scanner(System.in);
+	  System.out.println("Enter your age");
+	  age = scan.nextInt();
+  }
+  public void verify()throws Exception
+  {
+	  if(age<18)
+	  {
+		  UnderAgeException a = new UnderAgeException();
+		  System.out.println(a.getMessage());
+		  throw a;
+	  }
+	  
+	  else if(age>65)
+	  {
+		  AboveAgeException b = new AboveAgeException();
+		  System.out.println(b.getMessage());
+		  throw b;
+	  }
+	  else
+	  {
+		  System.out.println("Collect your DL");
+	  }
+  }
+}
+
+
+class RTO
+{
+	public void initiate()
+	{
+		Application app = new Application();
+		   try
+		   {
+			   app.acceptInput();
+			   app.verify();
+		   }
+		   catch(Exception e)
+		   {
+			   try
+			   {
+				   app.acceptInput();
+				   app.verify();
+			   }
+			   catch(Exception f)
+			   {
+				   System.out.println("Apply after 6months!!");
+				   System.exit(0);
+		       }
+		   }
+	}
+}
+
+class Launch 
+{
+
+	public static void main(String[] args) 
+	{
+          RTO r = new RTO();
+          r.initiate();
+	}
+
+}
