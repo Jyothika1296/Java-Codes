@@ -1,0 +1,84 @@
+package com.gqt.entities;
+import java.util.Scanner;
+ class InvalidCustomerException extends Exception 
+{
+   public String getMessage()
+   {
+	   return "Invalid input. Try again!";
+   }
+}
+class ATM 
+{ 
+	private int acc_No=9999;
+	private int ps_Wrd=6666;
+	int ac;
+	int ps;
+	public void acceptInput()
+	{
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the Account number");
+		ac = scan.nextInt();
+		System.out.println("Enter the Password");
+		ps = scan.nextInt();
+    }
+	public void verify()throws Exception
+	{
+		if(ac == acc_No && ps == ps_Wrd)
+		{
+			System.out.println("collect your cash");
+		}
+		else
+		{
+			InvalidCustomerException ice = new InvalidCustomerException();
+			System.out.println(ice.getMessage());
+			throw ice;
+	    }
+			
+	}
+
+}
+class Bank 
+{
+   public void initiate()
+   {
+	   ATM atm = new ATM();
+	   try
+	   {
+		   atm.acceptInput();
+		   atm.verify();
+	   }
+	   catch(Exception e)
+	   {
+		   try
+		   {
+			   atm.acceptInput();
+			   atm.verify();
+		   }
+		   catch(Exception f)
+		   {
+			   try
+			   {
+				   atm.acceptInput();
+				   atm.verify();
+			   }
+			   catch(Exception g)
+			   {
+				   System.out.println("Card blocked!");
+				   System.exit(0);
+			   }
+	      }
+      }
+  }
+}
+
+
+class Launch 
+{
+
+	public static void main(String[] args) 
+	{
+        Bank b = new Bank();
+        b.initiate();
+	}
+
+}
